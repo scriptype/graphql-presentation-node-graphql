@@ -6,10 +6,10 @@ import {
   GraphQLSchema,
   GraphQLString,
   GraphQLInt,
-} from 'graphql'
-import fetch from 'node-fetch'
+} from 'graphql';
+import fetch from 'node-fetch';
 
-const { API_BASE_URL } = process.env
+const { API_BASE_URL } = process.env;
 
 const StationType = new GraphQLObjectType({
   name: 'Station',
@@ -18,30 +18,30 @@ const StationType = new GraphQLObjectType({
     id: {
       type: GraphQLInt,
       description: 'ID',
-      resolve: obj => obj.station_ID
+      resolve: (obj) => obj.station_ID,
     },
     name: {
       type: GraphQLString,
-      description: 'Name'
+      description: 'Name',
     },
     status: {
       type: GraphQLString,
-      description: 'Status'
+      description: 'Status',
     },
     available: {
       type: GraphQLInt,
-      description: 'Availability'
+      description: 'Availability',
     },
     connected: {
       type: GraphQLInt,
-      description: 'Connectivity'
+      description: 'Connectivity',
     },
     disabled: {
       type: GraphQLInt,
-      description: 'Disabled or not'
+      description: 'Disabled or not',
     },
-  })
-})
+  }),
+});
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -56,26 +56,31 @@ const QueryType = new GraphQLObjectType({
       },
       resolve: (root, { first, last }, ctx) =>
         fetch(`${API_BASE_URL}/stations`)
-          .then(res => res.json())
-          .then(json => {
-            if (first) { return json.slice(0, first) }
-            if (last) { return json.slice(last * -1) }
-            return json
-          })
+          .then((res) => res.json())
+          .then((json) => {
+            if (first) {
+              return json.slice(0, first);
+            }
+            if (last) {
+              return json.slice(last * -1);
+            }
+            return json;
+          }),
     },
     station: {
       type: StationType,
       description: 'A single charging station',
       args: {
         id: {
-          type: new GraphQLNonNull(GraphQLID)
-        }
+          type: new GraphQLNonNull(GraphQLID),
+        },
       },
-      resolve: (root, args, ctx) => fetch(`${API_BASE_URL}/stations/${args.id}`).then(res => res.json())
-    }
-  })
-})
+      resolve: (root, args, ctx) =>
+        fetch(`${API_BASE_URL}/stations/${args.id}`).then((res) => res.json()),
+    },
+  }),
+});
 
 export default new GraphQLSchema({
-  query: QueryType
-})
+  query: QueryType,
+});
