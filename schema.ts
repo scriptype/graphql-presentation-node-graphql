@@ -50,7 +50,18 @@ const QueryType = new GraphQLObjectType({
     allStations: {
       type: new GraphQLList(StationType),
       description: 'All stations',
-      resolve: (root, args, ctx) => fetch(`${API_BASE_URL}/stations`).then(res => res.json())
+      args: {
+        first: { type: GraphQLInt },
+        last: { type: GraphQLInt },
+      },
+      resolve: (root, { first, last }, ctx) =>
+        fetch(`${API_BASE_URL}/stations`)
+          .then(res => res.json())
+          .then(json => {
+            if (first) { return json.slice(0, first) }
+            if (last) { return json.slice(last * -1) }
+            return json
+          })
     },
     station: {
       type: StationType,
