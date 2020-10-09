@@ -6,39 +6,68 @@ import {
   GraphQLSchema,
   GraphQLString,
   GraphQLInt,
+  GraphQLBoolean,
 } from 'graphql';
 import fetch from 'node-fetch';
 
 const { API_BASE_URL } = process.env;
 
-const StationType = new GraphQLObjectType({
-  name: 'Station',
+const commonFields = {
+  id: {
+    type: GraphQLInt,
+    description: 'ID',
+    resolve: (station: any) => station.station_ID,
+  },
+  name: {
+    type: GraphQLString,
+    description: 'Name',
+  },
+};
+
+const StationSummaryType = new GraphQLObjectType({
+  name: 'StationSummary',
   description: 'A charging station',
   fields: () => ({
-    id: {
-      type: GraphQLInt,
-      description: 'ID',
-      resolve: (obj) => obj.station_ID,
+    ...commonFields,
+    operational: {
+      type: GraphQLBoolean,
+      description: 'Operational or not',
+      resolve: (station) => !!station.available,
     },
-    name: {
-      type: GraphQLString,
-      description: 'Name',
-    },
+  }),
+});
+
+const StationFullType = new GraphQLObjectType({
+  name: 'StationFull',
+  description: 'A charging station',
+  fields: () => ({
+    ...commonFields,
     status: {
       type: GraphQLString,
       description: 'Status',
     },
     available: {
-      type: GraphQLInt,
+      type: GraphQLBoolean,
       description: 'Availability',
+      resolve: (station) => !!station.available,
     },
     connected: {
-      type: GraphQLInt,
+      type: GraphQLBoolean,
       description: 'Connectivity',
+      resolve: (station) => !!station.connected,
     },
     disabled: {
-      type: GraphQLInt,
+      type: GraphQLBoolean,
       description: 'Disabled or not',
+      resolve: (station) => !!station.disabled,
+    },
+    currency: {
+      type: GraphQLString,
+      description: 'Currency',
+    },
+    inuse: {
+      type: GraphQLString,
+      description: 'In use date',
     },
   }),
 });
@@ -48,7 +77,7 @@ const QueryType = new GraphQLObjectType({
   description: 'Root query type',
   fields: () => ({
     allStations: {
-      type: new GraphQLList(StationType),
+      type: new GraphQLList(StationSummaryType),
       description: 'All stations',
       args: {
         first: { type: GraphQLInt },
@@ -68,7 +97,7 @@ const QueryType = new GraphQLObjectType({
           }),
     },
     station: {
-      type: StationType,
+      type: StationFullType,
       description: 'A single charging station',
       args: {
         id: {
