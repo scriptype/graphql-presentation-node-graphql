@@ -134,7 +134,15 @@ const QueryType = new GraphQLObjectType({
         },
       },
       resolve: (root, args, ctx) =>
-        fetch(`${API_BASE_URL}/stations/${args.id}`).then((res) => res.json()),
+        fetch(`${API_BASE_URL}/stations/${args.id}`).then((res) => {
+          const contentType = res.headers.get('Content-Type');
+          if (contentType && /text\/html/.test(contentType)) {
+            return res.text().then((error) => {
+              throw error;
+            });
+          }
+          return res.json();
+        }),
     },
   }),
 });
