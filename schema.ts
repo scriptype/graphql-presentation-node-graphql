@@ -37,6 +37,31 @@ const StationSummaryType = new GraphQLObjectType({
   }),
 });
 
+const StationConnectorType = new GraphQLObjectType({
+  name: 'StationConnector',
+  description: 'Station connector info',
+  fields: () => ({
+    id: {
+      type: GraphQLInt,
+      description: 'Id',
+      resolve: (connector) => connector.connector_id,
+    },
+    currentType: {
+      type: GraphQLString,
+      description: 'Current Type',
+      resolve: (connector) => connector.current_type,
+    },
+    status: {
+      type: GraphQLString,
+      description: 'Status',
+    },
+    type: {
+      type: GraphQLString,
+      description: 'Type',
+    },
+  }),
+});
+
 const StationFullType = new GraphQLObjectType({
   name: 'StationFull',
   description: 'A charging station',
@@ -68,6 +93,11 @@ const StationFullType = new GraphQLObjectType({
     inuse: {
       type: GraphQLString,
       description: 'In use date',
+    },
+    connectors: {
+      type: new GraphQLList(StationConnectorType),
+      description: 'Connectors',
+      resolve: (station) => station.connector_info,
     },
   }),
 });
