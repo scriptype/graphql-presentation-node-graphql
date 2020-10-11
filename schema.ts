@@ -119,8 +119,7 @@ const QueryType = new GraphQLObjectType({
           .then((json) => {
             if (first) {
               return json.slice(0, first);
-            }
-            if (last) {
+            } else if (last) {
               return json.slice(last * -1);
             }
             return json;
