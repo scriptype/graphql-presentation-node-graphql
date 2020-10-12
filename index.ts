@@ -16,7 +16,7 @@ app.use(
   cors(),
   graphqlHTTP({
     schema: MySchema,
-    graphiql: true,
+    graphiql: process.env.NODE_ENV !== 'production',
   })
 );
 
