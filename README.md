@@ -23,7 +23,8 @@ echo "API_BASE_URL=<REST_URL>" > .env
 # Install dependencies
 npm install
 
-# npm start
+# Start the local development server
+npm start
 ```
 
 Then the server should start on http://localhost:4000.
