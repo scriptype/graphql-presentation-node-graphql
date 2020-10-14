@@ -4,7 +4,7 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-  GraphQLFieldConfig
+  GraphQLFieldConfig,
 } from 'graphql';
 import fetch from 'node-fetch';
 
@@ -31,7 +31,7 @@ const StationSummaryType = new GraphQLObjectType({
   }),
 });
 
-type ConfigType = GraphQLFieldConfig<any, any, { [argName: string]: any; }>
+type ConfigType = GraphQLFieldConfig<any, any, { [argName: string]: any }>;
 const allStationsSchema: ConfigType = {
   type: new GraphQLList(StationSummaryType),
   description: 'All stations',
@@ -40,16 +40,16 @@ const allStationsSchema: ConfigType = {
     last: { type: GraphQLInt },
   },
   resolve: (root, { first, last }, ctx) =>
-  fetch(`${API_BASE_URL}/stations`)
-  .then((res) => res.json())
-  .then((json) => {
-    if (first) {
-      return json.slice(0, first);
-    } else if (last) {
-      return json.slice(last * -1);
-    }
-    return json;
-  }),
-}
+    fetch(`${API_BASE_URL}/stations`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (first) {
+          return json.slice(0, first);
+        } else if (last) {
+          return json.slice(last * -1);
+        }
+        return json;
+      }),
+};
 
-export default allStationsSchema
+export default allStationsSchema;

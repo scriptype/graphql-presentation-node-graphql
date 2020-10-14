@@ -6,7 +6,7 @@ import {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-  GraphQLFieldConfig
+  GraphQLFieldConfig,
 } from 'graphql';
 import fetch from 'node-fetch';
 
@@ -85,7 +85,7 @@ const StationFullType = new GraphQLObjectType({
   }),
 });
 
-type ConfigType = GraphQLFieldConfig<any, any, { [argName: string]: any; }>
+type ConfigType = GraphQLFieldConfig<any, any, { [argName: string]: any }>;
 const stationSchema: ConfigType = {
   type: StationFullType,
   description: 'A single charging station',
@@ -104,6 +104,6 @@ const stationSchema: ConfigType = {
       }
       return res.json();
     }),
-}
+};
 
-export default stationSchema
+export default stationSchema;
