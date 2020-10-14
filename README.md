@@ -10,6 +10,7 @@ In short:
 - Uses nodemon to auto-refresh the server on changes in local development.
 - Uses morgan for logging to stdout
 - Uses prettier, husky and lint-staged to ensure coding standards are intact.
+- It has a Dockerfile, so it can be `docker-compose`d by the [Hub](https://github.com/scriptype/graphql-presentation-hub).
 
 ## Development
 
