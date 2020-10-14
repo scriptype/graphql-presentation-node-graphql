@@ -17,7 +17,7 @@ const StationSummaryType = new GraphQLObjectType({
     id: {
       type: GraphQLInt,
       description: 'ID',
-      resolve: (station: any) => station.station_ID,
+      resolve: (station) => station.station_ID,
     },
     name: {
       type: GraphQLString,
