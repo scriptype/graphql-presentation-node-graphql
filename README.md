@@ -35,9 +35,10 @@ Then the server should start on http://localhost:4000.
 
 ## Deployment
 
-Deployment of the app is handled by the [Hub](https://github.com/scriptype/graphql-presentation-hub).
+Pushing to master branch will trigger a deployment job in Travis. Production
+environment is handled by the [Hub](https://github.com/scriptype/graphql-presentation-hub).
 
-In case you want to deploy this separately, you can the following commands to
+In case you want to deploy this separately, you can run the following commands to
 start the server in production mode:
 
 ```sh
@@ -47,6 +48,3 @@ NODE_ENV=production npm run build
 # Start the compiled server in production mode
 NODE_ENV=production npm run start-prod
 ```
-
-But none of the steps above is necessary if you'll use the Hub to deploy the app
-together with the front-end.
