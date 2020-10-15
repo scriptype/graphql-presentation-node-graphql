@@ -1,5 +1,7 @@
 # Node-GraphQL
 
+![Travis build badge](https://api.travis-ci.org/scriptype/graphql-presentation-node-graphql.svg?branch=master&status=passed)
+
 This is the GraphQL API that talks to an existing REST API. It's built on Node.js.
 
 In short:
