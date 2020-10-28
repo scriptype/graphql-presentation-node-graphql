@@ -2,7 +2,7 @@
 
 [![Travis build badge](https://api.travis-ci.org/scriptype/graphql-presentation-node-graphql.svg?branch=master&status=passed)](https://travis-ci.org/github/scriptype/graphql-presentation-node-graphql)
 
-This is the GraphQL API that talks to an existing REST API. It's built on Node.js.
+This is the GraphQL API that talks to an existing REST API. It's built on Node.js. You can check out the [presentation!](https://slides.com/mustastum/react-graphql)
 
 In short:
 
